@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xumeng.dao.IRoleDao">
+    <!--根据用户id查询角色-->
+    <resultMap id="findRoles" type="com.xumeng.domain.Role">
+        <id column="id" property="id"/>
+        <result column="roleName" property="roleName"/>
+        <result column="roleDesc" property="roleDesc"/>
+        <collection property="permissions" column="id" select="com.xumeng.dao.IPermissionDao.findByRoleId"/>
+    </resultMap>
+
+
+    <select id="findRoleByUserId" parameterType="int" resultMap="findRoles">
+        select * from role where id in (select roleId from users_role where userId = #{userId});
+    </select>
+
+    <!--分页查询所有角色信息-->
+    <select id="findAll" resultType="com.xumeng.domain.Role">
+        select * from role
+    </select>
+
+    <!--查询角色详细信息-->
+    <select id="findById" resultMap="findRoles" parameterType="int">
+        select * from role where id=#{id}
+    </select>
+
+    <!--查询角色可添加权限-->
+    <select id="findRoleByIdAndAllPermission" parameterType="int" resultType="com.xumeng.domain.Permission">
+        select * from permission where id not in (select permissionId from role_permission where roleId=#{id})
+    </select>
+
+    <!--给角色添加权限-->
+    <insert id="addPermissionToRole">
+        insert into role_permission(permissionId, roleId) values (#{permissionId}, #{roleId})
+    </insert>
+
+    <!--给添加角色-->
+    <insert id="save" parameterType="com.xumeng.domain.Role">
+        insert into role(roleName, roleDesc) values (#{roleName}, #{roleDesc})
+    </insert>
+</mapper>

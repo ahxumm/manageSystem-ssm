@@ -1,0 +1,16 @@
+com\xumeng\service\IOrderService.class
+com\xumeng\service\impl\SysLogServiceImpl.class
+com\xumeng\service\IUserService.class
+com\xumeng\service\impl\RoleServiceImpl.class
+com\xumeng\service\impl\ProductServiceImpl.class
+com\xumeng\service\impl\PermissionServiceImpl.class
+com\xumeng\service\impl\TravellerServiceImpl.class
+com\xumeng\service\impl\UserServiceImpl.class
+com\xumeng\service\IMemberService.class
+com\xumeng\service\impl\OrderServiceImpl.class
+com\xumeng\service\impl\MemberServiceImpl.class
+com\xumeng\service\IPermissionService.class
+com\xumeng\service\ITravellerService.class
+com\xumeng\service\IProductService.class
+com\xumeng\service\IRoleService.class
+com\xumeng\service\ISysLogService.class

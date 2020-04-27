@@ -1,0 +1,8 @@
+com\xumeng\controller\SysLogController.class
+com\xumeng\controller\OrderController.class
+com\xumeng\controller\RoleController.class
+com\xumeng\controller\UserController.class
+com\xumeng\controller\LogAop.class
+com\xumeng\controller\PermissionController.class
+com\xumeng\controller\TravellerController.class
+com\xumeng\controller\ProductController.class

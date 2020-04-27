@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xumeng.dao.IOrderDao">
+    <!-- 查询所有 -->
+    <resultMap id="orderProduct" type="com.xumeng.domain.Orders">
+        <id column="id" property="id"/>
+        <result column="orderNum" property="orderNum"/>
+        <result column="orderTime" property="orderTime"/>
+        <result column="peopleCount" property="peopleCount"/>
+        <result column="orderDesc" property="orderDesc"/>
+        <result column="payType" property="payType"/>
+        <result column="orderStatus" property="orderStatus"/>
+        <association property="product" javaType="com.xumeng.domain.Product">
+            <id column="id" property="id"/>
+            <result column="productNum" property="productNum"/>
+            <result column="productName" property="productName"/>
+            <result column="cityName" property="cityName"/>
+            <result column="departureTime" property="departureTime"/>
+            <result column="productPrice" property="productPrice"/>
+            <result column="productDesc" property="productDesc"/>
+            <result column="productStatus" property="productStatus"/>
+        </association>
+    </resultMap>
+    <select id="findAll" resultMap="orderProduct" parameterType="String">
+        select orders.*, product.* from orders, product where orders.productId = product.id and orderNum like concat('%',#{orderNum},'%')
+    </select>
+
+    <!-- 根据id查询 -->
+    <resultMap id="getInfo" type="com.xumeng.domain.Orders">
+        <id column="id" property="id"/>
+        <result column="orderNum" property="orderNum"/>
+        <result column="orderTime" property="orderTime"/>
+        <result column="peopleCount" property="peopleCount"/>
+        <result column="orderDesc" property="orderDesc"/>
+        <result column="payType" property="payType"/>
+        <result column="orderStatus" property="orderStatus"/>
+        <association property="product" column="productId" select="com.xumeng.dao.IProductDao.findById"/>
+        <association property="member" column="memberId" select="com.xumeng.dao.IMemberDao.findById"/>
+        <collection property="travellers" column="id" select="com.xumeng.dao.ITravellerDao.findByIds"/>
+    </resultMap>
+    <select id="findbyId" resultMap="getInfo" parameterType="int">
+        select id,orderNum,orderTime,peopleCount,orderDesc,payType,orderStatus,productId,memberId from orders where id=#{id}
+    </select>
+
+    <!-- 完场订单添加 -->
+    <insert id="orderAddFinish" parameterType="com.xumeng.domain.Orders">
+        insert into orders (orderNum,orderTime,peopleCount,orderDesc,payType,orderStatus,productId,memberId) values (#{orderNum},
+        #{orderTime},#{peopleCount},#{orderDesc},#{payType},#{orderStatus},#{productId},#{memberId})
+    </insert>
+
+    <!-- 查询所有订单 -->
+    <select id="findAllOrders" resultType="com.xumeng.domain.Orders">
+        select * from orders
+    </select>
+
+    <!-- 订单人数加一 -->
+    <update id="addOneToTotal" parameterType="int">
+        update orders set peopleCount = peopleCount+1 where id=#{id}
+    </update>
+
+    <!-- 删除与订单关联的游客 -->
+    <delete id="deleteTravellerByOrderId" parameterType="int">
+        delete from order_traveller where orderId=#{orderId}
+    </delete>
+
+    <!-- 删除订单 -->
+    <delete id="delete" parameterType="int">
+        delete from orders where id=#{orderId}
+    </delete>
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xumeng.dao.IUserDao">
+    <!--根据用户名查询用户信息-->
+    <resultMap id="findUser" type="com.xumeng.domain.UserInfo">
+        <id column="id" property="id"/>
+        <result column="email" property="email"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="phoneNum" property="phoneNum"/>
+        <result column="status" property="status"/>
+        <collection property="roles" column="id" select="com.xumeng.dao.IRoleDao.findRoleByUserId"/>
+    </resultMap>
+    <select id="findByUsername" resultMap="findUser" parameterType="String">
+        select * from users where username = #{username};
+    </select>
+
+
+    <!--分页查询用户信息-->
+    <select id="findAll" resultType="com.xumeng.domain.UserInfo">
+        select * from users
+    </select>
+
+    <!--添加用户信息-->
+    <insert id="save" parameterType="com.xumeng.domain.UserInfo">
+        insert into users(email, username, password, phoneNum, status) values (#{email},#{username},#{password},#{phoneNum},#{status});
+    </insert>
+
+    <!--根据id查询用户信息-->
+    <resultMap id="findById" type="com.xumeng.domain.UserInfo">
+        <id column="id" property="id"/>
+        <result column="email" property="email"/>
+        <result column="phoneNum" property="phoneNum"/>
+        <collection property="roles" column="id" select="com.xumeng.dao.IRoleDao.findRoleByUserId"/>
+    </resultMap>
+    <select id="findById" resultMap="findById" parameterType="int">
+        select * from users where id=#{id}
+    </select>
+
+
+    <!--查询用户可以添加的角色-->
+    <select id="findUserByIdAndAllRole" resultType="com.xumeng.domain.Role" parameterType="Int">
+        select * from role where id not in (select roleId from users_role where userId=#{id})
+    </select>
+
+    <!--给用户添加角色-->
+    <insert id="addRoleToUser">
+        insert into users_role(userId, roleId) values (#{userId}, #{roleId})
+    </insert>
+</mapper>

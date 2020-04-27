@@ -1,0 +1,8 @@
+com\xumeng\dao\ISysLogDao.class
+com\xumeng\dao\ITravellerDao.class
+com\xumeng\dao\IRoleDao.class
+com\xumeng\dao\IPermissionDao.class
+com\xumeng\dao\IOrderDao.class
+com\xumeng\dao\IProductDao.class
+com\xumeng\dao\IUserDao.class
+com\xumeng\dao\IMemberDao.class

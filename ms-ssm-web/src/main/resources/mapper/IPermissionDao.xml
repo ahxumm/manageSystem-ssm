@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xumeng.dao.IPermissionDao">
+    <!--根据roleId列表查询权限-->
+    <select id="findByRoleId" parameterType="int" resultType="com.xumeng.domain.Permission">
+        select * from permission where id in (select permissionId from role_permission where roleId=#{roleId})
+    </select>
+
+    <!--分页查询权限信息-->
+    <select id="findAll" resultType="com.xumeng.domain.Permission">
+        select * from permission
+    </select>
+
+    <!--添加权限-->
+    <insert id="save" parameterType="com.xumeng.domain.Permission">
+        insert into permission(permissionName, url) values (#{permissionName}, #{url})
+    </insert>
+</mapper>

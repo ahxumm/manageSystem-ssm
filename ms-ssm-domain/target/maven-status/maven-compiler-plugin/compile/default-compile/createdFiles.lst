@@ -1,0 +1,9 @@
+com\xumeng\domain\SysLog.class
+com\xumeng\domain\OrderTravller.class
+com\xumeng\domain\UserInfo.class
+com\xumeng\domain\Role.class
+com\xumeng\domain\Member.class
+com\xumeng\domain\Traveller.class
+com\xumeng\domain\Orders.class
+com\xumeng\domain\Permission.class
+com\xumeng\domain\Product.class

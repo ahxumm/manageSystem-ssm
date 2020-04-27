@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <mappers>
+        <mapper resource="mapper/IProductDao.xml"/>
+        <mapper resource="mapper/IOrderDao.xml"/>
+        <mapper resource="mapper/IMemberDao.xml"/>
+        <mapper resource="mapper/ITravellerDao.xml"/>
+        <mapper resource="mapper/IUserDao.xml"/>
+        <mapper resource="mapper/IRoleDao.xml"/>
+        <mapper resource="mapper/IPermissionDao.xml"/>
+        <mapper resource="mapper/ISysLogDao.xml"/>
+    </mappers>
+</configuration>

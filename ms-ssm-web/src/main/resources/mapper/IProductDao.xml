@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xumeng.dao.IProductDao">
+    <!-- 分页查找所有商品 -->
+    <select id="findAll" resultType="com.xumeng.domain.Product" parameterType="String">
+        select * from product where productName like concat('%',#{productName},'%')
+    </select>
+
+    <!-- 根据id查找商品 -->
+    <select id="findById" parameterType="int" resultType="com.xumeng.domain.Product">
+        select * from product where id = #{id}
+    </select>
+
+    <!-- 保存新的商品 -->
+    <insert id="save" parameterType="com.xumeng.domain.Product">
+        insert into product (productNum,productName,cityName,departureTime,productPrice,productDesc,productStatus)
+        values (#{productNum}, #{productName}, #{cityName}, #{departureTime}, #{productPrice}, #{productDesc}, #{productStatus})
+    </insert>
+
+    <!-- 删除商品 -->
+    <delete id="delete" parameterType="int">
+        delete from product where id=#{id};
+    </delete>
+
+    <!-- 改变商品状态 -->
+    <update id="changeProductStatus" parameterType="com.xumeng.domain.Product">
+        update product
+        <set>
+            <if test="productStatus == 0">
+                productStatus = 1,
+            </if>
+            <if test="productStatus == 1">
+                productStatus = 0,
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 完成编辑商品保存 -->
+    <update id="productEditFinsh" parameterType="com.xumeng.domain.Product">
+        update product set productNum=#{productNum},productName=#{productName},cityName=#{cityName},
+        departureTime=#{departureTime},productPrice=#{productPrice},
+        productDesc=#{productDesc},productStatus=#{productStatus} where id=#{id}
+    </update>
+
+    <!-- 查找所有商品 -->
+    <select id="findAllProduct" resultType="com.xumeng.domain.Product">
+        select * from product
+    </select>
+
+</mapper>

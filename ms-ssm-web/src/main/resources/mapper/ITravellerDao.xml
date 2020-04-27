@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xumeng.dao.ITravellerDao">
+    <!-- 根据id列表查询游客信息 -->
+    <select id="findByIds" resultType="com.xumeng.domain.Traveller" parameterType="int">
+        select * from traveller where id in (select travellerId from order_traveller where orderId = #{orderId})
+    </select>
+    <!-- 查询所有游客 -->
+    <select id="findAll" resultType="com.xumeng.domain.Traveller">
+        select * from traveller
+    </select>
+    <!-- 添加订单号 -->
+    <insert id="addOrderId" parameterType="com.xumeng.domain.OrderTravller">
+        insert into order_traveller values (#{orderId}, #{travellerId})
+    </insert>
+</mapper>
